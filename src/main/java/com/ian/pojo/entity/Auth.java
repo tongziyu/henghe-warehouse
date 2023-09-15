@@ -1,4 +1,4 @@
-package com.ian.pojo;
+package com.ian.pojo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

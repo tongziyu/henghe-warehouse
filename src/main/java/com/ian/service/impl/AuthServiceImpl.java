@@ -1,8 +1,9 @@
 package com.ian.service.impl;
 
 import com.ian.mapper.AuthMapper;
-import com.ian.pojo.Auth;
+import com.ian.pojo.entity.Auth;
 import com.ian.service.AuthService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
  * @Date: 2023/9/15 23:49
  */
 @Service
+@Slf4j
 public class AuthServiceImpl implements AuthService {
     @Autowired
     private AuthMapper authMapper;
@@ -28,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     @Cacheable(cacheNames = "authTree",key = "#userId")
     @Override
     public List<Auth> selectAuthTreeByUserId(Integer userId) {
-
+        log.info("权限菜单树 userId:{}",userId);
         List<Auth> auths = authMapper.selectAuthByUserId(userId);
 
         List<Auth> auths1 = allAuthToAuthTree(auths,0);

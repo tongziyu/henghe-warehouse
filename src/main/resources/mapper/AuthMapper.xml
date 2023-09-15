@@ -5,7 +5,7 @@
 <mapper namespace="com.ian.mapper.AuthMapper">
 
 
-  <select id="selectAuthByUserId" resultType="com.ian.pojo.Auth">
+  <select id="selectAuthByUserId" resultType="com.ian.pojo.entity.Auth">
     SELECT
         t3.*
     FROM

@@ -1,6 +1,6 @@
 package com.ian.service;
 
-import com.ian.pojo.Auth;
+import com.ian.pojo.entity.Auth;
 
 import java.util.List;
 

@@ -9,6 +9,7 @@ import com.ian.utils.CurrentUser;
 import com.ian.utils.DigestUtil;
 import com.ian.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -42,7 +43,10 @@ public class LoginController {
     private TokenUtils tokenUtils;
 
 
-
+    /**
+     * 生成验证码
+     * @param response
+     */
     @RequestMapping("/captcha/captchaImage")
     public void captchaImage(HttpServletResponse response)  {
 
@@ -133,9 +137,24 @@ public class LoginController {
         }
     }
 
+    /**
+     * 获取当前用户
+     * @param token
+     * @return
+     */
     @GetMapping("/curr-user")
     public Result getCurrentUser(@RequestHeader("token") String token){
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         return Result.ok(currentUser);
+    }
+
+    /**
+     * 用户退出登录
+     * @return
+     */
+    @DeleteMapping("/logout")
+    public Result logout(@RequestHeader("token") String token){
+        redisTemplate.delete(token);
+        return Result.ok();
     }
 }

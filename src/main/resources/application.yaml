@@ -39,7 +39,7 @@ file:
 logging:
   level:
     com:
-      sky:
+      ian:
         mapper: debug
         service: info
         controller: info

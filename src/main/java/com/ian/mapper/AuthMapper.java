@@ -1,6 +1,6 @@
 package com.ian.mapper;
 
-import com.ian.pojo.Auth;
+import com.ian.pojo.entity.Auth;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
