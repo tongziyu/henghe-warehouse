@@ -1,4 +1,4 @@
-package com.ian.pojo;
+package com.ian.pojo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

@@ -1,7 +1,7 @@
 server:
   port: 9999
   servlet:
-    # ???????
+    # 项目访问地址
     context-path: /warehouse
 
 spring:
@@ -10,7 +10,7 @@ spring:
     port: 6379
     database: 1
     password: 20001030
-  # ??????
+  # 数据源配置
   datasource:
     url: jdbc:mysql://localhost:3306/db_warehouse?serverTimezone=UTC
     username: root
@@ -21,18 +21,18 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
-    # ??????
+    # 驼峰命名
     map-underscore-to-camel-case: true
-  # ???????
+  # 别名
   type-aliases-package: com.ian.pojo
 
-# token ????
+# token 过期时间
 warehouse:
-  expire-time: 360000000
+  expire-time: 3600
 
 file:
-  # ????????
+  # 上传文件路径
   upload-path: classpath:static/img/upload
-  # ???????????????????
+  # 上传的文件保存路径
   access-path: /img/upload/
 

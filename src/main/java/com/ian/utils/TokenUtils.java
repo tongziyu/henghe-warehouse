@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.pn.exception.BusinessException;
+import com.ian.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -44,6 +44,7 @@ public class TokenUtils {
                 .withClaim(CLAIM_NAME_USERNAME, currentUser.getUserName())
                 .withIssuedAt(new Date())//发行时间
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireTime *1000))//有效时间
+                // 指定签名
                 .sign(Algorithm.HMAC256(securityKey));
         return token;
     }
@@ -55,7 +56,7 @@ public class TokenUtils {
         //生成token
         String token = sign(currentUser, password);
         //将token保存到redis中,并设置token在redis中的过期时间
-        stringRedisTemplate.opsForValue().set(token, token, expireTime *2, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(token, token, expireTime, TimeUnit.SECONDS);
         return token;
     }
 

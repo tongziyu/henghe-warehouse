@@ -1,4 +1,4 @@
-package com.ian.pojo;
+package com.ian.pojo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class LoginUser {
+public class LoginUserDTO {
 
     private String userCode;//用户名
 
