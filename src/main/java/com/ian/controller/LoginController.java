@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -134,8 +131,11 @@ public class LoginController {
             // 如果根据账号没查到,就返回账号不存在 错误信息
             return Result.err(Result.CODE_ERR_BUSINESS,"账号不存在!");
         }
-
-
     }
 
+    @GetMapping("/curr-user")
+    public Result getCurrentUser(@RequestHeader("token") String token){
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        return Result.ok(currentUser);
+    }
 }

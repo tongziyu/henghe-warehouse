@@ -36,3 +36,13 @@ file:
   # 上传的文件保存路径
   access-path: /img/upload/
 
+logging:
+  level:
+    com:
+      sky:
+        mapper: debug
+        service: info
+        controller: info
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %magenta(%-5level) %green([%-50.50class]) >>> %cyan(%msg) %n'
+

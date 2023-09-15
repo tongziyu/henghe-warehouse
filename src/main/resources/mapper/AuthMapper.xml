@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ian.mapper.AuthMapper">
+
+
+  <select id="selectAuthByUserId" resultType="com.ian.pojo.Auth">
+    SELECT
+        t3.*
+    FROM
+        user_role t1, role_auth t2, auth_info t3
+    WHERE
+        t1.role_id = t2.role_id
+        and t2.auth_id = t3.auth_id
+        and t1.user_id = #{userId}
+        and t3.auth_state = 1
+        and t3.auth_type != 3
+  </select>
+</mapper>
