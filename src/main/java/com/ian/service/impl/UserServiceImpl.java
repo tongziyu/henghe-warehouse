@@ -4,20 +4,19 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ian.constant.MessageConstant;
 import com.ian.exception.UserException;
+import com.ian.mapper.RoleMapper;
 import com.ian.mapper.UserMapper;
-import com.ian.pojo.dto.UserAddDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
+import com.ian.pojo.entity.Role;
 import com.ian.pojo.entity.User;
 import com.ian.pojo.vo.UserQueryPageVO;
 import com.ian.service.UserService;
-import com.ian.utils.DigestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     /**
      * 通过账号查询user
@@ -82,5 +84,27 @@ public class UserServiceImpl implements UserService {
             throw new UserException(MessageConstant.USER_CODE_EXISTS);
         }
         userMapper.insert(user);
+    }
+    /**
+     * 修改用户状态
+     * @param user
+     */
+    @Override
+    public void updateStateByUserId(User user) {
+       userMapper.updateStateByUserId(user);
+
+    }
+
+
+    /**
+     * 通过用户id查询出来该用户的所有的角色
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Role> getUserRoleListByUserId(Integer userId) {
+        List<Role> roleList = roleMapper.selectUserRoleListByUserId(userId);
+
+        return roleList;
     }
 }

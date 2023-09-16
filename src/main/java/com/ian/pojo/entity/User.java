@@ -2,7 +2,10 @@ package com.ian.pojo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -10,6 +13,7 @@ import java.util.Date;
  */
 @Data
 @ToString
+@NoArgsConstructor
 public class User {
 
 	private int userId;//用户id
@@ -30,21 +34,18 @@ public class User {
 
 	//返回前端时,自动将Date转换成指定格式的json字符串
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private Date createTime;//创建时间
+	private LocalDateTime createTime;//创建时间
 
 	private int updateBy;//修改人
 
-	private Date updateTime;//修改时间
+	private LocalDateTime updateTime;//修改时间
 
 	private String getCode;
 
-	public User() {
-
-	}
 
 	public User(int userId, String userCode, String userName, String userPwd,
 			String userType, String userState, String isDelete, int createBy,
-			Date createTime, int updateBy, Date updateTime) {
+				LocalDateTime createTime, int updateBy, LocalDateTime updateTime) {
 		this.userId = userId;
 		this.userCode = userCode;
 		this.userName = userName;

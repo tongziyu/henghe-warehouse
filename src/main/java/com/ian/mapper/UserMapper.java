@@ -27,4 +27,11 @@ public interface UserMapper {
      */
     @Select("select * from user_info where user_code = #{userCode}")
     User selectUserByUserCode(String userCode);
+
+    /**
+     * 修改用户的状态
+     * @param user
+     */
+    void updateStateByUserId(User user);
+
 }

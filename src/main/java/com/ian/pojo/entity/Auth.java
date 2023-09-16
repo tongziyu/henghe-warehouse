@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -38,11 +39,11 @@ public class Auth implements Serializable {
 
 	private int createBy;//创建权限(菜单)的用户id
 
-	private Date createTime;//权限(菜单)的创建时间
+	private LocalDateTime createTime;//权限(菜单)的创建时间
 
 	private int updateBy;//修改权限(菜单)的用户id
 
-	private Date updateTime;//权限(菜单)的修改时间
+	private LocalDateTime updateTime;//权限(菜单)的修改时间
 
 	//追加的List<Auth>集合属性 -- 用于存储当前权限(菜单)的子级权限(菜单)
 	private List<Auth> childAuth;

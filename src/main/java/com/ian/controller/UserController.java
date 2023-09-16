@@ -4,6 +4,7 @@ import com.ian.pojo.dto.UserAddDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
 import com.ian.pojo.entity.Auth;
 import com.ian.pojo.Result;
+import com.ian.pojo.entity.Role;
 import com.ian.pojo.entity.User;
 import com.ian.pojo.vo.UserQueryPageVO;
 import com.ian.service.AuthService;
@@ -16,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +39,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+
     /**
      * 用户权限菜单树
      * @return
@@ -51,6 +55,11 @@ public class UserController {
         return Result.ok(auths);
     }
 
+    /**
+     * 分页查询员工
+     * @param userQueryPageDTO
+     * @return
+     */
     @GetMapping("/user-list")
     public Result getUserList(UserQueryPageDTO userQueryPageDTO){
         log.info("分页查询数据:{}",userQueryPageDTO);
@@ -58,6 +67,12 @@ public class UserController {
         return Result.ok(userList);
     }
 
+    /**
+     * 添加员工
+     * @param userAddDTO
+     * @param token
+     * @return
+     */
     @PostMapping("/addUser")
     public Result addUser(@RequestBody UserAddDTO userAddDTO,
                           @RequestHeader("token") String token
@@ -72,10 +87,41 @@ public class UserController {
         // 对密码进行MD5加密
         user.setUserPwd(DigestUtil.hmacSign(userAddDTO.getUserPwd()));
         user.setCreateBy(currentUser.getUserId());
-        user.setCreateTime(new Date());
+        user.setCreateTime(LocalDateTime.now());
         user.setUserState("0");
+        user.setIsDelete("0");
 
         userService.addUser(user);
         return Result.ok();
+    }
+
+    /**
+     * 修改员工状态
+     */
+    @PutMapping("/updateState")
+    public Result updateState(@RequestBody User user,
+                              @RequestHeader("token") String token
+    ){
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+
+        log.info("修改的用户:{}",user);
+        user.setUpdateBy(currentUser.getUserId());
+        user.setUpdateTime(LocalDateTime.now());
+
+        userService.updateStateByUserId(user);
+        return Result.ok(Result.CODE_OK);
+    }
+
+
+    /**
+     * 通过用户id查询出来该用户所有的角色
+     * @param userId
+     * @return
+     */
+    @GetMapping("/user-role-list/{userId}")
+    public Result getUserRoleList(@PathVariable("userId") Integer userId){
+        List<Role> roleList = userService.getUserRoleListByUserId(userId);
+
+        return Result.ok(roleList);
     }
 }

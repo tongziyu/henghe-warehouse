@@ -3,22 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ian.mapper.UserMapper">
+
     <select id="selectUserList" resultType="user">
       select
-            *
+            t1.*, t2.user_code as getCode
       from
-          user_info
+          user_info t1 , user_info t2
       <where>
         <if test="userCode != null">
-          user_code like concat("%",#{userCode},"%")
+          t1.user_code like concat("%",#{userCode},"%")
         </if>
         <if test="userType != null and userType != ''">
-          and user_type = #{userType}
+          and t1.user_type = #{userType}
         </if>
         <if test="userState != null and userState != ''">
-          and user_state = #{userState}
+          and t1.user_state = #{userState}
         </if>
-        and is_delete = 0
+        and t1.is_delete = 0
+        and t1.create_by = t2.user_id
       </where>
     </select>
 
@@ -30,5 +32,20 @@
             (#{userCode},#{userName},#{userPwd},#{userType},#{userState},
              #{isDelete},#{createBy},#{createTime},#{updateBy},#{updateTime})
     </insert>
+
+    <update id="updateStateByUserId" parameterType="user">
+        update
+            user_info
+        <set>
+            user_state = #{userState},
+            update_by = #{updateBy},
+            update_time = #{updateTime}
+        </set>
+        <where>
+            user_id = #{userId}
+        </where>
+
+    </update>
+
 
 </mapper>
