@@ -1,6 +1,7 @@
 package com.ian.mapper;
 
 import com.ian.pojo.entity.Role;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -71,4 +72,11 @@ public interface RoleMapper {
      * @param role
      */
     void updateRoleDesc(Role role);
+
+    /**
+     * 根据id删除role
+     * @param roleId
+     */
+    @Delete("delete from role where role_id = #{roleId}")
+    void deleteRoleByRoleId(Integer roleId);
 }

@@ -11,4 +11,10 @@ public interface AuthService {
      * @return
      */
     List<Auth> selectAuthTreeByUserId(Integer userId);
+
+    /**
+     * 获取权限树
+     * @return
+     */
+    List<Auth> selectAuthTree();
 }

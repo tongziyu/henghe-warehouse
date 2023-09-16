@@ -123,6 +123,14 @@ public class RoleController {
 
         roleService.updateRoleDesc(role);
         return Result.ok("修改成功!!");
-
     }
+
+    @DeleteMapping("/role-delete/{roleId}")
+    public Result roleDeleteByRoleId(@PathVariable("roleId") Integer roleId){
+        // 直接删除role
+        roleService.deleteRoleByRoleId(roleId);
+
+        return Result.ok("删除成功!!");
+    }
+
 }

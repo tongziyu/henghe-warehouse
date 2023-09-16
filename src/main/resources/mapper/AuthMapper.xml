@@ -17,4 +17,14 @@
         and t3.auth_state = 1
         and t3.auth_type != 3
   </select>
+
+  <select id="selectAuthAll" resultType="com.ian.pojo.entity.Auth">
+      SELECT
+            *
+      from
+            auth_info
+      where
+            auth_state = 1
+            and auth_type != 3
+    </select>
 </mapper>

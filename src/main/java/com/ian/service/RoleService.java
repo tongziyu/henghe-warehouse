@@ -39,4 +39,10 @@ public interface RoleService {
      * @param role
      */
     void updateRoleDesc(Role role);
+
+    /**
+     * 根据id删除role
+     * @param roleId
+     */
+    void deleteRoleByRoleId(Integer roleId);
 }

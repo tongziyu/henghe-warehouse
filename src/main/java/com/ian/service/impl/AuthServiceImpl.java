@@ -5,6 +5,7 @@ import com.ian.pojo.entity.Auth;
 import com.ian.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @Date: 2023/9/15 23:49
  */
 @Service
+@CacheConfig(cacheNames = "com.ian.service.impl.AuthServiceImpl")
 @Slf4j
 public class AuthServiceImpl implements AuthService {
     @Autowired
@@ -57,5 +59,18 @@ public class AuthServiceImpl implements AuthService {
             auth.setChildAuth(childAuthList);
         }
         return authList;
+    }
+
+
+    /**
+     * 获取权限树
+     * @return
+     */
+    @Override
+    @Cacheable(cacheNames = "authTree")
+    public List<Auth> selectAuthTree() {
+        List<Auth> authList = authMapper.selectAuthAll();
+        List<Auth> authList1 = allAuthToAuthTree(authList, 0);
+        return authList1;
     }
 }

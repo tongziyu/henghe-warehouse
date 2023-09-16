@@ -10,7 +10,6 @@ import com.ian.pojo.entity.Role;
 import com.ian.pojo.vo.RoleQueryPageVo;
 import com.ian.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,5 +112,14 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateRoleDesc(Role role) {
         roleMapper.updateRoleDesc(role);
+    }
+
+    /**
+     * 根据id删除role
+     * @param roleId
+     */
+    @Override
+    public void deleteRoleByRoleId(Integer roleId) {
+        roleMapper.deleteRoleByRoleId(roleId);
     }
 }

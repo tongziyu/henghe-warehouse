@@ -14,4 +14,9 @@ public interface AuthMapper {
      */
     List<Auth> selectAuthByUserId(Integer userId);
 
+    /**
+     * 获取所有的权限
+     * @return
+     */
+    List<Auth> selectAuthAll();
 }
