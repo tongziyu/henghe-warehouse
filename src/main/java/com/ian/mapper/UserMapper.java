@@ -45,5 +45,11 @@ public interface UserMapper {
      * 修改用户昵称
      * @param user
      */
-    void updateUser(User user);
+    void updateUserName(User user);
+
+    /**
+     * 重置用户密码
+     * @param user
+     */
+    void updateUserPwd(User user);
 }

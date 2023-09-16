@@ -1,5 +1,6 @@
 package com.ian.controller;
 
+import com.ian.constant.UserConstant;
 import com.ian.pojo.dto.UserAddDTO;
 import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
@@ -200,4 +201,20 @@ public class UserController {
         return Result.ok("修改成功");
     }
 
+    @PutMapping("/updatePwd/{userId}")
+    public Result updatePwd(@PathVariable("userId") Integer userId,
+                            @RequestHeader("token") String token
+                            ){
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setUpdateBy(currentUser.getUserId());
+        user.setUpdateTime(LocalDateTime.now());
+
+        String MD5Password = DigestUtil.hmacSign(UserConstant.DEFAULT_PASSWORD);
+        user.setUserPwd(MD5Password);
+        userService.updateUserPwd(user);
+        return Result.ok("密码重置成功");
+    }
 }

@@ -57,7 +57,7 @@
         where
             user_id = #{userId}
     </update>
-    <update id="updateUser" parameterType="User">
+    <update id="updateUserName" parameterType="User">
         update
             user_info
         set
@@ -66,5 +66,17 @@
             user_name = #{userName}
         where
             user_id = #{userId}
+    </update>
+
+    <update id="updateUserPwd">
+        update
+            user_info
+        set
+            update_by = #{updateBy},
+            update_time = #{updateTime},
+            user_pwd = #{userPwd}
+        where
+            user_id = #{userId}
+
     </update>
 </mapper>

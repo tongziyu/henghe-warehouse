@@ -187,6 +187,15 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void updateUser(User user) {
-        userMapper.updateUser(user);
+        userMapper.updateUserName(user);
+    }
+
+    /**
+     * 重置用户密码
+     * @param user
+     */
+    @Override
+    public void updateUserPwd(User user) {
+        userMapper.updateUserPwd(user);
     }
 }

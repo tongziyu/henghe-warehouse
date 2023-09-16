@@ -72,4 +72,10 @@ public interface UserService {
      * @param user
      */
     void updateUser(User user);
+
+    /**
+     * 重置用户密码
+     * @param user
+     */
+    void updateUserPwd(User user);
 }
