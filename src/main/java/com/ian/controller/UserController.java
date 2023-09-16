@@ -3,6 +3,7 @@ package com.ian.controller;
 import com.ian.pojo.dto.UserAddDTO;
 import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
+import com.ian.pojo.dto.UserUpdateDTO;
 import com.ian.pojo.entity.Auth;
 import com.ian.pojo.Result;
 import com.ian.pojo.entity.Role;
@@ -174,8 +175,29 @@ public class UserController {
 
         userService.deleteUserBatch(UserIds,currentUser);
 
-
         return Result.ok("删除成功!");
+    }
+
+    /**
+     * 修改用户信息
+     * @param userUpdateDTO
+     * @return
+     */
+    @PutMapping("/updateUser")
+    public Result updateUser(@RequestBody UserUpdateDTO userUpdateDTO,
+                             @RequestHeader("token") String token
+                             ){
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        log.info("需要修改的数据:{}",userUpdateDTO);
+        User user = new User();
+
+        user.setUpdateBy(currentUser.getUserId());
+        user.setUpdateTime(LocalDateTime.now());
+        user.setUserId(userUpdateDTO.getUserId());
+        user.setUserName(userUpdateDTO.getUserName());
+
+        userService.updateUser(user);
+        return Result.ok("修改成功");
     }
 
 }

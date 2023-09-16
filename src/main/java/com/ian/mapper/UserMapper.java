@@ -40,4 +40,10 @@ public interface UserMapper {
      * @param user
      */
     void deleteUserByUserId(User user);
+
+    /**
+     * 修改用户昵称
+     * @param user
+     */
+    void updateUser(User user);
 }

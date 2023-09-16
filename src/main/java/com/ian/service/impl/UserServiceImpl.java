@@ -180,4 +180,13 @@ public class UserServiceImpl implements UserService {
             userMapper.deleteUserByUserId(user);
         }
     }
+
+    /**
+     * 修改员工信息 (只能修改userName)
+     * @param user
+     */
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
 }

@@ -66,4 +66,10 @@ public interface UserService {
      * @param currentUser
      */
     void deleteUserBatch(List<Integer> userIds, CurrentUser currentUser);
+
+    /**
+     * 修改员工信息 (只能修改userName)
+     * @param user
+     */
+    void updateUser(User user);
 }
