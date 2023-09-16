@@ -27,4 +27,10 @@ public interface RoleMapper {
      * @return
      */
     Integer selectRoleIdByRoleName(String roleName);
+
+    /**
+     * 查询所有的角色,并且把角色的创建人也查询出来
+     * @return
+     */
+    List<Role> selectRoleAllAndCreateName(Role role);
 }

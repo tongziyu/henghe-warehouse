@@ -1,8 +1,10 @@
 package com.ian.controller;
 
 import com.ian.pojo.Result;
+import com.ian.pojo.dto.RoleQueryPageDTO;
 import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.entity.Role;
+import com.ian.pojo.vo.RoleQueryPageVo;
 import com.ian.service.RoleService;
 import com.ian.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +40,15 @@ public class RoleController {
         return Result.ok(roleList);
     }
 
-
-
-
+    /**
+     * 分页查询角色
+     * roleName=     &roleCode=      &roleState=
+     * &pageSize=5       &pageNum=1       &totalNum=0
+     * @return
+     */
+    @GetMapping("/role-page-list")
+    public Result rolePageList(RoleQueryPageDTO roleQueryPageDTO){
+        RoleQueryPageVo roleQueryPageVo = roleService.getRolePageList(roleQueryPageDTO);
+        return Result.ok(roleQueryPageVo);
+    }
 }

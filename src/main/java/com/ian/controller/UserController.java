@@ -201,6 +201,12 @@ public class UserController {
         return Result.ok("修改成功");
     }
 
+    /**
+     * 重置用户密码
+     * @param userId
+     * @param token
+     * @return
+     */
     @PutMapping("/updatePwd/{userId}")
     public Result updatePwd(@PathVariable("userId") Integer userId,
                             @RequestHeader("token") String token

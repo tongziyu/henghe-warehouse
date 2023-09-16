@@ -1,9 +1,11 @@
 package com.ian.pojo.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -12,6 +14,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Role {
     private Integer roleId;
 
@@ -28,11 +31,11 @@ public class Role {
 
     private Integer createBy;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
     private Integer updateBy;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
-
+    private String getCode;
 }

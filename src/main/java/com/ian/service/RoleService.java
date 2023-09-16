@@ -1,7 +1,9 @@
 package com.ian.service;
 
 
+import com.ian.pojo.dto.RoleQueryPageDTO;
 import com.ian.pojo.entity.Role;
+import com.ian.pojo.vo.RoleQueryPageVo;
 
 import java.util.List;
 
@@ -13,4 +15,10 @@ public interface RoleService {
      */
     List<Role> getRoleList();
 
+    /**
+     * 分页查询角色
+     * @param roleQueryPageDTO
+     * @return
+     */
+    RoleQueryPageVo getRolePageList(RoleQueryPageDTO roleQueryPageDTO);
 }
