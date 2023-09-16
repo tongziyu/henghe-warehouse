@@ -33,4 +33,10 @@ public interface RoleService {
      * @param role
      */
     void addRole(Role role);
+
+    /**
+     * 更新角色描述信息
+     * @param role
+     */
+    void updateRoleDesc(Role role);
 }

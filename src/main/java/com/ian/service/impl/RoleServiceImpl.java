@@ -105,4 +105,13 @@ public class RoleServiceImpl implements RoleService {
         // 插入数据
         roleMapper.insert(role);
     }
+
+    /**
+     * 更新角色描述信息
+     * @param role
+     */
+    @Override
+    public void updateRoleDesc(Role role) {
+        roleMapper.updateRoleDesc(role);
+    }
 }

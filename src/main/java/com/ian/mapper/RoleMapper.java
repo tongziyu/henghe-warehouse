@@ -65,4 +65,10 @@ public interface RoleMapper {
      * @param role
      */
     void insert(Role role);
+
+    /**
+     * 更新角色描述
+     * @param role
+     */
+    void updateRoleDesc(Role role);
 }

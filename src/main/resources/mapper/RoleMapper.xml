@@ -51,4 +51,15 @@
         values
             (#{roleName},#{roleDesc},#{roleCode},#{roleState},#{createBy},#{createTime},#{updateBy},#{updateTime})
     </insert>
+
+    <update id="updateRoleDesc">
+        update
+            role
+        set
+            role_desc = #{roleDesc},
+            update_by = #{updateBy},
+            update_time = #{updateTime}
+        where
+            role_id = #{roleId}
+    </update>
 </mapper>
