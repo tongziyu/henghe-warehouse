@@ -11,7 +11,7 @@ public interface RoleMapper {
      * 查询所有的角色
      * @return
      */
-    @Select("select * from role")
+    @Select("select * from role where role_state = 1")
     List<Role> selectRoleAll();
 
     /**

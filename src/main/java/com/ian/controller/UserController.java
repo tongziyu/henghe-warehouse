@@ -135,6 +135,47 @@ public class UserController {
         log.info("给用户分配角色:{}",userAssignRoleDTO);
         userService.assignRole(userAssignRoleDTO);
 
-        return Result.ok();
+        return Result.ok("分配角色成功!");
     }
+
+    /**
+     * 通过userId删除user
+     * @param userId
+     * @return
+     */
+    @DeleteMapping("/deleteUser/{userId}")
+    public Result deleteUserByUserId(@PathVariable("userId") Integer userId,
+                                     @RequestHeader("token") String token){
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setUpdateBy(currentUser.getUserId());
+        user.setUpdateTime(LocalDateTime.now());
+        user.setIsDelete("1");
+
+        userService.deleteUserByUserId(user);
+
+
+        return Result.ok("删除成功!");
+    }
+
+
+    /**
+     * 批量删除user
+     */
+    @DeleteMapping("/deleteUserList")
+    public Result deleteBatch(@RequestBody List<Integer> UserIds,
+                              @RequestHeader("token") String token
+    ){
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+
+        log.info("要删除的userId集合:{}",UserIds);
+
+        userService.deleteUserBatch(UserIds,currentUser);
+
+
+        return Result.ok("删除成功!");
+    }
+
 }

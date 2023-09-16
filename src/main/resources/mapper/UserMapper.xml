@@ -11,7 +11,7 @@
           user_info t1 , user_info t2
       <where>
         <if test="userCode != null">
-          t1.user_code like concat("%",#{userCode},"%")
+          t1.user_code like concat('%',#{userCode},'%')
         </if>
         <if test="userType != null and userType != ''">
           and t1.user_type = #{userType}
@@ -47,5 +47,15 @@
 
     </update>
 
+    <update id="deleteUserByUserId" parameterType="User">
+        update
+            user_info
+        set
+            is_delete = #{isDelete},
+            update_by = #{updateBy},
+            update_time = #{updateTime}
+        where
+            user_id = #{userId}
+    </update>
 
 </mapper>

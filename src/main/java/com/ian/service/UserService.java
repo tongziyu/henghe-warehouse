@@ -6,6 +6,7 @@ import com.ian.pojo.dto.UserQueryPageDTO;
 import com.ian.pojo.entity.Role;
 import com.ian.pojo.entity.User;
 import com.ian.pojo.vo.UserQueryPageVO;
+import com.ian.utils.CurrentUser;
 
 
 import java.util.List;
@@ -52,4 +53,17 @@ public interface UserService {
      * @param userAssignRoleDTO
      */
     void assignRole(UserAssignRoleDTO userAssignRoleDTO);
+
+    /**
+     * 删除用户, 实际上是把is_delete字段修改成1
+     * @param user
+     */
+    void deleteUserByUserId(User user);
+
+    /**
+     * 批量删除用户
+     * @param userIds
+     * @param currentUser
+     */
+    void deleteUserBatch(List<Integer> userIds, CurrentUser currentUser);
 }

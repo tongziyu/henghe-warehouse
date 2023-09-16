@@ -14,13 +14,16 @@ import com.ian.pojo.entity.User;
 import com.ian.pojo.entity.UserRole;
 import com.ian.pojo.vo.UserQueryPageVO;
 import com.ian.service.UserService;
+import com.ian.utils.CurrentUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -139,6 +142,42 @@ public class UserServiceImpl implements UserService {
             userRole.setUserId(userAssignRoleDTO.getUserId());
             userRoleMapper.insert(userRole);
         }
+    }
 
+    /**
+     * 删除用户, 实际上是把is_delete字段修改成1
+     * @param user
+     */
+    @Override
+    public void deleteUserByUserId(User user) {
+        /*
+        思路:
+            - 删除用户的时候用将对应的 is_delete数据修改为1
+         */
+        userMapper.deleteUserByUserId(user);
+    }
+
+    /**
+     * 批量删除用户  实际上是把is_delete字段修改成1
+     * @param userIds
+     * @param currentUser
+     */
+    @Override
+    @Transactional
+    public void deleteUserBatch(List<Integer> userIds, CurrentUser currentUser) {
+        /*
+        思路:
+            - 删除用户的时候用将对应的 is_delete数据修改为1
+         */
+        for (Integer userId: userIds){
+            // 封装数据
+            User user = new User();
+            user.setIsDelete("1");
+            user.setUpdateTime(LocalDateTime.now());
+            user.setUpdateBy(currentUser.getUserId());
+            user.setUserId(userId);
+            // 删除该用户
+            userMapper.deleteUserByUserId(user);
+        }
     }
 }

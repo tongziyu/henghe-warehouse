@@ -1,6 +1,7 @@
 package com.ian.mapper;
 
 import com.ian.pojo.entity.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -25,7 +26,7 @@ public interface UserMapper {
      * @param userCode
      * @return
      */
-    @Select("select * from user_info where user_code = #{userCode}")
+    @Select("select * from user_info where user_code = #{userCode} and is_delete = 0")
     User selectUserByUserCode(String userCode);
 
     /**
@@ -34,4 +35,9 @@ public interface UserMapper {
      */
     void updateStateByUserId(User user);
 
+    /**
+     * 删除用户, 实际上是把is_delete字段修改成1
+     * @param user
+     */
+    void deleteUserByUserId(User user);
 }
