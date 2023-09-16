@@ -122,4 +122,6 @@ public class RoleServiceImpl implements RoleService {
     public void deleteRoleByRoleId(Integer roleId) {
         roleMapper.deleteRoleByRoleId(roleId);
     }
+
+
 }

@@ -8,6 +8,7 @@ import com.ian.pojo.dto.RoleUpdateDTO;
 import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.entity.Role;
 import com.ian.pojo.vo.RoleQueryPageVo;
+import com.ian.service.RoleAuthService;
 import com.ian.service.RoleService;
 import com.ian.service.UserService;
 import com.ian.utils.CurrentUser;
@@ -37,6 +38,9 @@ public class RoleController {
 
     @Autowired
     private TokenUtils tokenUtils;
+
+    @Autowired
+    private RoleAuthService roleAuthService;
 
     /**
      * 获取所有的角色信息
@@ -131,6 +135,17 @@ public class RoleController {
         roleService.deleteRoleByRoleId(roleId);
 
         return Result.ok("删除成功!!");
+    }
+
+    /**
+     * 根据roleId查询所有的AuthId
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/role-auth")
+    public Result getAuthIdsByRoleId(Integer roleId){
+        List<Integer> authList = roleAuthService.getAuthIdsByRoleId(roleId);
+        return Result.ok(authList);
     }
 
 }
