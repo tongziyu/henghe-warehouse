@@ -13,4 +13,18 @@ public interface UserMapper {
     User selectByUserCode(String userCode);
 
     List<User> selectUserList(User user);
+
+    /**
+     * 新增用户
+     * @param user
+     */
+    void insert(User user);
+
+    /**
+     * 根据user_code查询用户
+     * @param userCode
+     * @return
+     */
+    @Select("select * from user_info where user_code = #{userCode}")
+    User selectUserByUserCode(String userCode);
 }

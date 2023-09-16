@@ -2,16 +2,22 @@ package com.ian.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ian.constant.MessageConstant;
+import com.ian.exception.UserException;
 import com.ian.mapper.UserMapper;
+import com.ian.pojo.dto.UserAddDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
 import com.ian.pojo.entity.User;
 import com.ian.pojo.vo.UserQueryPageVO;
 import com.ian.service.UserService;
+import com.ian.utils.DigestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,5 +69,18 @@ public class UserServiceImpl implements UserService {
 
 
         return userQueryPageVO;
+    }
+
+    /**
+     * 添加用户
+     */
+    @Override
+    public void addUser(User user) {
+        User user1 = userMapper.selectUserByUserCode(user.getUserCode());
+        // 如果数据库里面有该 用户名,则直接抛出异常
+        if (user1 != null){
+            throw new UserException(MessageConstant.USER_CODE_EXISTS);
+        }
+        userMapper.insert(user);
     }
 }

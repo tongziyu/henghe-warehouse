@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ian.mapper.UserMapper">
-  <select id="selectUserList" resultType="user">
+    <select id="selectUserList" resultType="user">
       select
             *
       from
@@ -12,7 +12,7 @@
         <if test="userCode != null">
           user_code like concat("%",#{userCode},"%")
         </if>
-        <if test="userType != null and userType !0= ''">
+        <if test="userType != null and userType != ''">
           and user_type = #{userType}
         </if>
         <if test="userState != null and userState != ''">
@@ -20,5 +20,15 @@
         </if>
         and is_delete = 0
       </where>
-  </select>
+    </select>
+
+    <insert id="insert" parameterType="user">
+        insert into
+            user_info(user_code, user_name, user_pwd, user_type, user_state, is_delete,
+                      create_by, create_time, update_by, update_time)
+        values
+            (#{userCode},#{userName},#{userPwd},#{userType},#{userState},
+             #{isDelete},#{createBy},#{createTime},#{updateBy},#{updateTime})
+    </insert>
+
 </mapper>
