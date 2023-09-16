@@ -2,12 +2,15 @@ package com.ian.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ian.constant.MessageConstant;
+import com.ian.exception.RoleException;
 import com.ian.mapper.RoleMapper;
 import com.ian.pojo.dto.RoleQueryPageDTO;
 import com.ian.pojo.entity.Role;
 import com.ian.pojo.vo.RoleQueryPageVo;
 import com.ian.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,5 +77,32 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateRoleState(Role role) {
         roleMapper.updateRoleState(role);
+    }
+
+    /**
+     * 添加角色
+     * @param role
+     */
+    @Override
+    public void addRole(Role role) {
+        /*
+        思路:
+            - 查询名称,如果数据库里面有,这抛出异常
+            - 查询代码,如果数据库里面有,则抛出异常
+            - 如果都没有,则将role保存进数据库
+         */
+        Role role1 = roleMapper.selectRoleByRoleName(role.getRoleName());
+
+        if (role1 != null){
+            throw new RoleException(MessageConstant.ROLE_NAME_EXISTS);
+        }
+
+        Role role2 = roleMapper.selectRoleByRoleCode(role.getRoleCode());
+        if (role2 != null){
+            throw new RoleException(MessageConstant.ROLE_CODE_EXISTS);
+        }
+
+        // 插入数据
+        roleMapper.insert(role);
     }
 }

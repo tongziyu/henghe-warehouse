@@ -27,4 +27,10 @@ public interface RoleService {
      * @param role
      */
     void updateRoleState(Role role);
+
+    /**
+     * 添加角色
+     * @param role
+     */
+    void addRole(Role role);
 }

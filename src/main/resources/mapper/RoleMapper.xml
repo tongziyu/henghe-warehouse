@@ -44,4 +44,11 @@
         </where>
 
     </select>
+
+    <insert id="insert">
+        insert into
+            role(role_name, role_desc, role_code, role_state, create_by, create_time, update_by, update_time)
+        values
+            (#{roleName},#{roleDesc},#{roleCode},#{roleState},#{createBy},#{createTime},#{updateBy},#{updateTime})
+    </insert>
 </mapper>

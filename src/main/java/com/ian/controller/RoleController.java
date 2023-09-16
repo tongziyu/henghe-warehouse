@@ -2,6 +2,7 @@ package com.ian.controller;
 
 import com.ian.mapper.RoleMapper;
 import com.ian.pojo.Result;
+import com.ian.pojo.dto.RoleAddDTO;
 import com.ian.pojo.dto.RoleQueryPageDTO;
 import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.entity.Role;
@@ -59,6 +60,12 @@ public class RoleController {
         return Result.ok(roleQueryPageVo);
     }
 
+    /**
+     * 修改角色状态
+     * @param role
+     * @param token
+     * @return
+     */
     @PutMapping("/role-state-update")
     public Result roleStateUpdate(@RequestBody Role role,
                                   @RequestHeader("token") String token
@@ -72,5 +79,28 @@ public class RoleController {
         roleService.updateRoleState(role);
 
         return Result.ok("修改状态成功!");
+    }
+
+    /**
+     * 添加角色
+     * @param roleAddDTO
+     * @param token
+     * @return
+     */
+    @PostMapping("/role-add")
+    public Result roleAdd(@RequestBody RoleAddDTO roleAddDTO,
+                          @RequestHeader("token") String token
+    ){
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        Role role = Role.builder()
+                .roleState("0")
+                .roleName(roleAddDTO.getRoleName())
+                .roleDesc(roleAddDTO.getRoleDesc())
+                .roleCode(roleAddDTO.getRoleCode())
+                .createBy(currentUser.getUserId())
+                .createTime(LocalDateTime.now())
+                .build();
+        roleService.addRole(role);
+        return Result.ok("添加成功");
     }
 }
