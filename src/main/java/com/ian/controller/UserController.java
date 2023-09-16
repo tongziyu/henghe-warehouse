@@ -1,6 +1,7 @@
 package com.ian.controller;
 
 import com.ian.pojo.dto.UserAddDTO;
+import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
 import com.ian.pojo.entity.Auth;
 import com.ian.pojo.Result;
@@ -123,5 +124,17 @@ public class UserController {
         List<Role> roleList = userService.getUserRoleListByUserId(userId);
 
         return Result.ok(roleList);
+    }
+
+    /**
+     * 给用户分配角色
+     * @return
+     */
+    @PutMapping("/assignRole")
+    public Result assignRole(@RequestBody UserAssignRoleDTO userAssignRoleDTO){
+        log.info("给用户分配角色:{}",userAssignRoleDTO);
+        userService.assignRole(userAssignRoleDTO);
+
+        return Result.ok();
     }
 }

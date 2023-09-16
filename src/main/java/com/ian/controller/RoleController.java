@@ -1,14 +1,13 @@
 package com.ian.controller;
 
 import com.ian.pojo.Result;
+import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.entity.Role;
 import com.ian.service.RoleService;
+import com.ian.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +24,9 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 获取所有的角色信息
      * @return
@@ -35,6 +37,8 @@ public class RoleController {
 
         return Result.ok(roleList);
     }
+
+
 
 
 }

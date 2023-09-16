@@ -1,12 +1,15 @@
 package com.ian.service;
 
 import com.ian.pojo.dto.UserAddDTO;
+import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
 import com.ian.pojo.entity.Role;
 import com.ian.pojo.entity.User;
 import com.ian.pojo.vo.UserQueryPageVO;
 
+
 import java.util.List;
+
 
 public interface UserService {
 
@@ -42,4 +45,11 @@ public interface UserService {
      * @return
      */
     List<Role> getUserRoleListByUserId(Integer userId);
+
+
+    /**
+     * 给用户分配角色
+     * @param userAssignRoleDTO
+     */
+    void assignRole(UserAssignRoleDTO userAssignRoleDTO);
 }

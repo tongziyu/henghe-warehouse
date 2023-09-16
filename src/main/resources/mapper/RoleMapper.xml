@@ -12,4 +12,13 @@
           and t2.user_id = #{userId}
           and t1.role_state = 1
     </select>
+
+    <select id="selectRoleIdByRoleName" resultType="java.lang.Integer">
+        select
+            role_id
+        from
+            role
+        where
+            role_name = #{roleName}
+    </select>
 </mapper>

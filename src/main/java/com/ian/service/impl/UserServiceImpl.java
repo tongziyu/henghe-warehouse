@@ -6,15 +6,19 @@ import com.ian.constant.MessageConstant;
 import com.ian.exception.UserException;
 import com.ian.mapper.RoleMapper;
 import com.ian.mapper.UserMapper;
+import com.ian.mapper.UserRoleMapper;
+import com.ian.pojo.dto.UserAssignRoleDTO;
 import com.ian.pojo.dto.UserQueryPageDTO;
 import com.ian.pojo.entity.Role;
 import com.ian.pojo.entity.User;
+import com.ian.pojo.entity.UserRole;
 import com.ian.pojo.vo.UserQueryPageVO;
 import com.ian.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -33,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     /**
      * 通过账号查询user
@@ -95,7 +102,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-
     /**
      * 通过用户id查询出来该用户的所有的角色
      * @param userId
@@ -106,5 +112,33 @@ public class UserServiceImpl implements UserService {
         List<Role> roleList = roleMapper.selectUserRoleListByUserId(userId);
 
         return roleList;
+    }
+
+    /**
+     * 给用户分配角色
+     * 添加事务
+     * @param userAssignRoleDTO
+     */
+    @Override
+    @Transactional
+    public void assignRole(UserAssignRoleDTO userAssignRoleDTO) {
+        /**
+         * 思路:
+         *      - 先通过userId删除该用户所有的角色,在插入角色
+         *      - 通过list里面的roleCheckList 查询出 对应角色的id
+         *      - 向User_role 表里面插入数据
+         */
+        // 删除该userId所有的角色
+        userRoleMapper.deleteByUserId(userAssignRoleDTO.getUserId());
+
+        List<String> roleCheckList = userAssignRoleDTO.getRoleCheckList();
+        for (String rc : roleCheckList){
+            UserRole userRole = new UserRole();
+            Integer roleId = roleMapper.selectRoleIdByRoleName(rc);
+            userRole.setRoleId(roleId);
+            userRole.setUserId(userAssignRoleDTO.getUserId());
+            userRoleMapper.insert(userRole);
+        }
+
     }
 }

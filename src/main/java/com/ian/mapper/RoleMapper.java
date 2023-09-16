@@ -20,4 +20,11 @@ public interface RoleMapper {
      * @return
      */
     List<Role> selectUserRoleListByUserId(Integer userId);
+
+    /**
+     * 通过角色名称查询角色id
+     * @param roleName
+     * @return
+     */
+    Integer selectRoleIdByRoleName(String roleName);
 }
