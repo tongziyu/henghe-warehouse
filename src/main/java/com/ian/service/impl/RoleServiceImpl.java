@@ -66,4 +66,13 @@ public class RoleServiceImpl implements RoleService {
 
         return roleQueryPageVo;
     }
+
+    /**
+     * 修改状态
+     * @param role
+     */
+    @Override
+    public void updateRoleState(Role role) {
+        roleMapper.updateRoleState(role);
+    }
 }

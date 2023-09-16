@@ -2,6 +2,7 @@ package com.ian.mapper;
 
 import com.ian.pojo.entity.Role;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -33,4 +34,8 @@ public interface RoleMapper {
      * @return
      */
     List<Role> selectRoleAllAndCreateName(Role role);
+
+    @Update("update role set role_state = #{roleState},update_by = #{updateBy},update_time=#{updateTime} " +
+            "where role_id = #{roleId}")
+    void updateRoleState(Role role);
 }

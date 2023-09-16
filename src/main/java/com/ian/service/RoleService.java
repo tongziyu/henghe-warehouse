@@ -21,4 +21,10 @@ public interface RoleService {
      * @return
      */
     RoleQueryPageVo getRolePageList(RoleQueryPageDTO roleQueryPageDTO);
+
+    /**
+     * 修改状态
+     * @param role
+     */
+    void updateRoleState(Role role);
 }

@@ -1,5 +1,6 @@
 package com.ian.controller;
 
+import com.ian.mapper.RoleMapper;
 import com.ian.pojo.Result;
 import com.ian.pojo.dto.RoleQueryPageDTO;
 import com.ian.pojo.dto.UserAssignRoleDTO;
@@ -7,10 +8,13 @@ import com.ian.pojo.entity.Role;
 import com.ian.pojo.vo.RoleQueryPageVo;
 import com.ian.service.RoleService;
 import com.ian.service.UserService;
+import com.ian.utils.CurrentUser;
+import com.ian.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,6 +32,9 @@ public class RoleController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TokenUtils tokenUtils;
 
     /**
      * 获取所有的角色信息
@@ -50,5 +57,20 @@ public class RoleController {
     public Result rolePageList(RoleQueryPageDTO roleQueryPageDTO){
         RoleQueryPageVo roleQueryPageVo = roleService.getRolePageList(roleQueryPageDTO);
         return Result.ok(roleQueryPageVo);
+    }
+
+    @PutMapping("/role-state-update")
+    public Result roleStateUpdate(@RequestBody Role role,
+                                  @RequestHeader("token") String token
+                                  ){
+        log.info("修改角色状态:{}",role);
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+
+        role.setUpdateBy(currentUser.getUserId());
+        role.setUpdateTime(LocalDateTime.now());
+
+        roleService.updateRoleState(role);
+
+        return Result.ok("修改状态成功!");
     }
 }
