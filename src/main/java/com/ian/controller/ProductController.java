@@ -3,18 +3,23 @@ package com.ian.controller;
 import com.ian.pojo.Result;
 import com.ian.pojo.dto.Page;
 import com.ian.pojo.dto.ProductPageDTO;
+import com.ian.pojo.entity.Place;
 import com.ian.pojo.entity.Product;
 import com.ian.pojo.entity.Supply;
 import com.ian.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.web.ProjectedPayload;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Description:
@@ -39,6 +44,16 @@ public class ProductController {
 
     @Autowired
     private ProductTypeService productTypeService;
+
+    @Autowired
+    private PlaceService placeService;
+
+    @Autowired
+    private UnitService unitService;
+
+
+    @Value("${file.upload.path}")
+    private String uploadPath;
 
 
     /**
@@ -80,23 +95,20 @@ public class ProductController {
 
 
     /**
-     * 查询供应商
+     * 查询所有供应商
      * @return
      */
     @GetMapping("/supply-list")
     public Result supplyList(){
         List<Supply> supplies = supplyService.selectSupplyList();
 
-        List<String> list = new ArrayList<>();
-        for (Supply supply : supplies){
-            list.add(supply.getSupplyName());
-        }
 
-        return Result.ok(list);
+
+        return Result.ok(supplies);
     }
 
     /**
-     * 返回种类树
+     * 返回所有种类树
      * @return
      */
     @GetMapping("/category-tree")
@@ -104,4 +116,91 @@ public class ProductController {
         return Result.ok(productTypeService.allProductTypeTree());
     }
 
+
+    /**
+     * 返回所有的产地信息
+     * @return
+     */
+    @GetMapping("/place-list")
+    public Result placeList(){
+        List<Place> placeList = placeService.selectPlaceList();
+        return Result.ok(placeList);
+    }
+
+
+    /**
+     * 返回所有的单位
+     * @return
+     */
+    @GetMapping("/unit-list")
+    public Result unitList(){
+        return Result.ok(unitService.selectUnitList());
+    }
+
+    /**
+     * 文件上传
+     */
+    @CrossOrigin
+    @PostMapping("/img-upload")
+    public Result uploadImage(MultipartFile file){
+        log.info("文件的名字:{}",file.getOriginalFilename());
+
+        // 拼接文件后缀
+        try {
+            // 拼接文件后缀
+            // String originalFilename = file.getOriginalFilename();
+
+            // int i = originalFilename.lastIndexOf(".");
+
+            // String substring = originalFilename.substring(i);
+
+            // UUID uuid = UUID.randomUUID();
+
+            // String fileName = uuid.toString() + substring;
+            /*
+                如果需要将图片保存到类路径下,那么只能只使用这个方式获取file对象:
+                 - 拿到图片上传的目录路径 [类路径 classpath:static/img/upload]
+                 - 使用Spring的ResourceUtils工具,将 static/img/upload放进去,
+                   返回的对象就是 classpath:static/img/upload
+             */
+            String fileName = file.getOriginalFilename();
+
+            File uploadFile = ResourceUtils.getFile(uploadPath);
+
+            // 拿到绝对路径:磁盘路径
+            String absoluteFile = uploadFile.getAbsolutePath();
+
+
+            // 拿到上传的文件要保存的磁盘文件路径 mac使用/, windows使用 \\
+            String filePath = absoluteFile + "/" + fileName;
+
+            log.info("拿到绝对路径:{}",absoluteFile);
+            log.info("文件要保存的磁盘文件路径:{}",filePath);
+
+            file.transferTo(new File(filePath));
+
+
+
+            // 成功响应
+            return Result.ok("上传成功");
+
+        } catch (IOException e) {
+
+            throw new RuntimeException("文件上传失败");
+        }
+    }
+
+    /**
+     * 添加商品
+     *
+     *
+     * @return
+     */
+    @PostMapping("/product-add")
+    public Result addProduct(@RequestBody Product product){
+        log.info("要插入的数据:{}",product);
+        productService.addProduct(product);
+
+        return Result.ok();
+    }
 }

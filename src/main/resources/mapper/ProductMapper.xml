@@ -93,5 +93,14 @@
         limit #{page.limitIndex}, #{page.pageSize}
     </select>
 
+    <insert id="insert" parameterType="Product">
+        insert into
+            product
+        values
+            (null,#{storeId},#{brandId},#{productName},#{productNum},#{productInvent},
+            #{typeId},#{supplyId},#{placeId},#{unitId},#{introduce},0,#{inPrice},
+        #{salePrice},#{memPrice},now(),null,#{createBy},null,#{imgs},#{productDate},#{suppDate})
+    </insert>
+
 
 </mapper>

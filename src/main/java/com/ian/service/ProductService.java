@@ -11,4 +11,9 @@ public interface ProductService {
     public Page queryProductPage(Page page, Product product);
 
 
+    /**
+     * 添加商品
+     * @param product
+     */
+    void addProduct(Product product);
 }

@@ -26,6 +26,7 @@ public class SupplyServiceImpl implements SupplyService {
      * 查询所有供应商
      * @return
      */
+    @Cacheable(cacheNames = "supplyList")
     @Override
     public List<Supply> selectSupplyList() {
 

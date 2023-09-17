@@ -40,6 +40,7 @@ public class LoginCheckFilter implements Filter {
         urlList.add("/login");
         urlList.add("/captcha/captchaImage");
         urlList.add("/logout");
+        urlList.add("/product/img-upload");
         if (urlList.contains(servletPath) || servletPath.contains("/img/upload")){
             filterChain.doFilter(request,response);
             return;
