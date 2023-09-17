@@ -2,10 +2,7 @@ package com.ian.controller;
 
 import com.ian.mapper.RoleMapper;
 import com.ian.pojo.Result;
-import com.ian.pojo.dto.RoleAddDTO;
-import com.ian.pojo.dto.RoleQueryPageDTO;
-import com.ian.pojo.dto.RoleUpdateDTO;
-import com.ian.pojo.dto.UserAssignRoleDTO;
+import com.ian.pojo.dto.*;
 import com.ian.pojo.entity.Role;
 import com.ian.pojo.vo.RoleQueryPageVo;
 import com.ian.service.RoleAuthService;
@@ -16,6 +13,7 @@ import com.ian.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.security.util.AuthResources;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -146,6 +144,18 @@ public class RoleController {
     public Result getAuthIdsByRoleId(Integer roleId){
         List<Integer> authList = roleAuthService.getAuthIdsByRoleId(roleId);
         return Result.ok(authList);
+    }
+
+    /**
+     * 授权
+     * @return
+     */
+    @PutMapping("/auth-grant")
+    public Result authGrant(@RequestBody AuthGrantDTO authGrantDTO){
+        log.info("授权信息:{}",authGrantDTO);
+        roleAuthService.authGrant(authGrantDTO);
+
+        return Result.ok("授权成功!!");
     }
 
 }
