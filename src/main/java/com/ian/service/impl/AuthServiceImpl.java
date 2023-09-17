@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private AuthMapper authMapper;
 
     /**
-     * 返回权限菜单树
+     * 通过userId 返回权限菜单树
      * @param userId
      * @return
      */
@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     /**
-     * 获取权限树
+     * 获取所有权限树
      * @return
      */
     @Override
