@@ -5,10 +5,7 @@ import com.ian.pojo.dto.Page;
 import com.ian.pojo.dto.ProductPageDTO;
 import com.ian.pojo.entity.Product;
 import com.ian.pojo.entity.Supply;
-import com.ian.service.BrandService;
-import com.ian.service.ProductService;
-import com.ian.service.StoreService;
-import com.ian.service.SupplyService;
+import com.ian.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.ProjectedPayload;
@@ -39,6 +36,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductTypeService productTypeService;
 
 
     /**
@@ -93,6 +93,15 @@ public class ProductController {
         }
 
         return Result.ok(list);
+    }
+
+    /**
+     * 返回种类树
+     * @return
+     */
+    @GetMapping("/category-tree")
+    public Result categoryTree(){
+        return Result.ok(productTypeService.allProductTypeTree());
     }
 
 }

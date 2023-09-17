@@ -28,7 +28,7 @@ mybatis:
 
 # token 过期时间
 warehouse:
-  expire-time: 3600
+  expire-time: 360000
 
 file:
   # 上传文件路径
