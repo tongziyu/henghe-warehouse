@@ -226,4 +226,18 @@ public class ProductController {
         productService.deleteBatch(productIdList);
         return Result.ok();
     }
+
+    /**
+     * 商品修改
+     * todo:商品修改未完成
+     * @return
+     */
+    @PutMapping("/product-update")
+    public Result updateProduct(@RequestBody Product product){
+
+        log.info("product:{}",product);
+
+
+        return Result.ok();
+    }
 }
