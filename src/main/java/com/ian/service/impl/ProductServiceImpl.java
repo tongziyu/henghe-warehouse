@@ -26,7 +26,12 @@ public class ProductServiceImpl implements ProductService {
     @Value("${file.access.path}")
     private String fileAccessPath;
 
-    //分页查询商品的业务方法
+    /**
+     * 分页查询商品的业务方法
+     * @param page
+     * @param product
+     * @return
+     */
     @Override
     public Page queryProductPage(Page page, Product product) {
 
@@ -61,5 +66,16 @@ public class ProductServiceImpl implements ProductService {
 
         product.setImgs(imgPath);
         productMapper.insert(product);
+    }
+
+    /**
+     * 修改商品状态
+     * @param product
+     */
+    @Override
+    public void changeState(Product product) {
+        productMapper.updateState(product);
+
+
     }
 }

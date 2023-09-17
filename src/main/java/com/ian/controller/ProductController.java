@@ -203,4 +203,15 @@ public class ProductController {
 
         return Result.ok();
     }
+
+    /**
+     * 商品起售停售
+     * @return
+     */
+    @PutMapping("/state-change")
+    public Result changeState(@RequestBody Product product){
+        productService.changeState(product);
+
+        return Result.ok();
+    }
 }
