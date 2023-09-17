@@ -36,4 +36,10 @@ public interface ProductMapper {
      */
     @Update("update product set up_down_state = #{upDownState} where product_id = #{productId}")
     void updateState(Product product);
+
+    /**
+     * 批量删除商品
+     * @param productIdList
+     */
+    void deleteBatch(@Param("productIdList") List<Integer> productIdList);
 }

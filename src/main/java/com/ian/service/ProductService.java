@@ -5,6 +5,8 @@ import com.ian.pojo.Result;
 import com.ian.pojo.dto.Page;
 import com.ian.pojo.entity.Product;
 
+import java.util.List;
+
 public interface ProductService {
     /**
      * 分页查询商品的业务方法
@@ -26,4 +28,10 @@ public interface ProductService {
      * @param product
      */
     void changeState(Product product);
+
+    /**
+     * 批量删除product
+     * @param productIdList
+     */
+    void deleteBatch(List<Integer> productIdList);
 }

@@ -214,4 +214,16 @@ public class ProductController {
 
         return Result.ok();
     }
+
+
+    /**
+     * 批量删除
+     * @return
+     */
+    @DeleteMapping("/product-list-delete")
+    public Result deleteProduct(@RequestBody List<Integer> productIdList){
+        log.info("批量删除的ID:{}",productIdList);
+        productService.deleteBatch(productIdList);
+        return Result.ok();
+    }
 }

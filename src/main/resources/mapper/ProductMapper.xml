@@ -102,5 +102,13 @@
         #{salePrice},#{memPrice},now(),null,#{createBy},null,#{imgs},#{productDate},#{suppDate})
     </insert>
 
-
+    <delete id="deleteBatch">
+        delete from
+            product
+        where
+            product_id in
+        <foreach collection="productIdList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

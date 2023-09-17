@@ -75,7 +75,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void changeState(Product product) {
         productMapper.updateState(product);
+    }
 
-
+    /**
+     * 批量删除product
+     * @param productIdList
+     */
+    @Override
+    public void deleteBatch(List<Integer> productIdList) {
+        productMapper.deleteBatch(productIdList);
     }
 }
