@@ -21,4 +21,10 @@ public interface InStoreService {
      * @param inStore
      */
     void addInWarehouse(InStore inStore, BuyList buyList);
+
+    /**
+     * 确认入库
+     * @param inStore
+     */
+    void updateConfirm(InStore inStore);
 }

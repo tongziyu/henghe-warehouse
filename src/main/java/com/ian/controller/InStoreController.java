@@ -8,9 +8,7 @@ import com.ian.service.InStoreService;
 import com.ian.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description:
@@ -48,6 +46,16 @@ public class InStoreController {
         InStorePageVo inStorePageVo = inStoreService.QueryInStorePage(inStorePageDTO);
 
         return Result.ok(inStorePageVo);
+    }
+
+    /**
+     * 确认入库
+     * @return
+     */
+    @PutMapping("/instore-confirm")
+    public Result inStoreConfirm(@RequestBody InStore inStore){
+        inStoreService.updateConfirm(inStore);
+        return Result.ok("入库成功!!!");
     }
 
 }
