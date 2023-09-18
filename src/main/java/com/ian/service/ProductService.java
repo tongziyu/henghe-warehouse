@@ -34,4 +34,10 @@ public interface ProductService {
      * @param productIdList
      */
     void deleteBatch(List<Integer> productIdList);
+
+    /**
+     * 修改商品
+     * @param product
+     */
+    void updateProduct(Product product);
 }

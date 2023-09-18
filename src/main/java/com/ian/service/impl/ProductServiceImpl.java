@@ -85,4 +85,27 @@ public class ProductServiceImpl implements ProductService {
     public void deleteBatch(List<Integer> productIdList) {
         productMapper.deleteBatch(productIdList);
     }
+
+    /**
+     * 修改商品
+     * @param product
+     */
+    @Override
+    public void updateProduct(Product product) {
+        /*
+        思路:
+            - product_num字段不能重复,首先通过product_num 查找有没有重复的,[并且商品的product_id 不等于当前的product_id]
+            - 某些字段不能被修改 product_id create_time create_by
+            -
+         */
+        Product product1 = productMapper.selectProductByProductNumWithProductId(product);
+
+        if (product1 != null){
+            throw new ProductException("商品编号已存在");
+        }
+
+        // 修改商品信息
+        productMapper.updateProduct(product);
+
+    }
 }

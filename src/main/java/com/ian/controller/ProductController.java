@@ -7,6 +7,8 @@ import com.ian.pojo.entity.Place;
 import com.ian.pojo.entity.Product;
 import com.ian.pojo.entity.Supply;
 import com.ian.service.*;
+import com.ian.utils.CurrentUser;
+import com.ian.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,6 +56,12 @@ public class ProductController {
 
     @Value("${file.upload.path}")
     private String uploadPath;
+
+    @Autowired
+    private TokenUtils tokenUtils;
+
+    @Value("${file.access.path}")
+    private String accessPath;
 
 
     /**
@@ -179,8 +187,6 @@ public class ProductController {
 
             file.transferTo(new File(filePath));
 
-
-
             // 成功响应
             return Result.ok("上传成功");
 
@@ -192,8 +198,6 @@ public class ProductController {
 
     /**
      * 添加商品
-     *
-     *
      * @return
      */
     @PostMapping("/product-add")
@@ -233,11 +237,26 @@ public class ProductController {
      * @return
      */
     @PutMapping("/product-update")
-    public Result updateProduct(@RequestBody Product product){
+    public Result updateProduct(@RequestBody Product product,
+                                @RequestHeader("token") String token
+    ){
+        log.info("-------------------------------------------------------------");
+
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+        log.info("token:{}",token);
+
+        log.info("currentUser:{}",currentUser);
+        log.info("-------------------------------------------------------------");
 
         log.info("product:{}",product);
+        String imgPath = accessPath + "/" + product.getImgs();
+        product.setImgs(imgPath);
 
+        product.setUpdateBy(currentUser.getUserId());
 
-        return Result.ok();
+        log.info("img:{}",imgPath);
+        productService.updateProduct(product);
+
+        return Result.ok("修改成功");
     }
 }

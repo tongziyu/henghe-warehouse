@@ -42,4 +42,17 @@ public interface ProductMapper {
      * @param productIdList
      */
     void deleteBatch(@Param("productIdList") List<Integer> productIdList);
+
+    /**
+     * 通过productNum查询product,并且productId 不等于当前id
+     * @param product
+     */
+    @Select("select * from product where product_num = #{productNum} and product_id != #{productId}")
+    Product selectProductByProductNumWithProductId(Product product);
+
+    /**
+     * 修改商品信息
+     * @param product
+     */
+    void updateProduct(Product product);
 }
