@@ -15,6 +15,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchasePageVO {
+    private Integer buyId;
+
     private String storeName;
 
     private String productName;

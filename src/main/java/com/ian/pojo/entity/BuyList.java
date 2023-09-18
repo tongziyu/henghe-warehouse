@@ -39,4 +39,11 @@ public class BuyList implements Serializable {
     private String isIn;
 
     private static final long serialVersionUID = 1L;
+
+    // 追加数据 ====================>
+
+    private String storeName;
+
+    private String productName;
+
 }

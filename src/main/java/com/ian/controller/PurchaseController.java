@@ -8,11 +8,10 @@ import com.ian.pojo.vo.PurchaseQueryPageVo;
 import com.ian.service.BuyListService;
 import com.ian.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.message.ReusableMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * @Description:
@@ -63,6 +62,26 @@ public class PurchaseController {
 
         PurchaseQueryPageVo purchaseQueryPageVo = buyListService.QueryPurchasePage(purchasePageDTO);
         return Result.ok(purchaseQueryPageVo);
+    }
+
+    /**
+     * 修改采购单
+     * @return
+     */
+    @PutMapping("/purchase-update")
+    public Result updatePurchase(@RequestBody BuyList buyList){
+        log.info("修改采购单:{}",buyList);
+        buyListService.updatePurchase(buyList);
+        return Result.ok();
+    }
+
+    /**
+     * 生成入库单
+     */
+    @PostMapping("/in-warehouse-record-add")
+     public Result inWarehouseRecordAdd(){
+
+        return null;
     }
 
 }

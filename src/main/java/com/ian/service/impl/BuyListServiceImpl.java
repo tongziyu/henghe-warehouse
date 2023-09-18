@@ -49,9 +49,9 @@ public class BuyListServiceImpl implements BuyListService {
     public PurchaseQueryPageVo QueryPurchasePage(PurchasePageDTO purchasePageDTO) {
         PageHelper.startPage(purchasePageDTO.getPageNum(),purchasePageDTO.getPageSize());
 
-        List<PurchasePageVO> purchasePageVOS = buyListMapper.selectPurchasePage(purchasePageDTO);
+        List<BuyList> buyLists = buyListMapper.selectPurchasePage(purchasePageDTO);
 
-        PageInfo pageInfo = new PageInfo(purchasePageVOS);
+        PageInfo pageInfo = new PageInfo(buyLists);
 
         PurchaseQueryPageVo purchaseQueryPageVo = new PurchaseQueryPageVo();
 
@@ -59,5 +59,14 @@ public class BuyListServiceImpl implements BuyListService {
 
         purchaseQueryPageVo.setResultList(pageInfo.getList());
         return purchaseQueryPageVo;
+    }
+
+    /**
+     * 修改采购单
+     * @param buyList
+     */
+    @Override
+    public void updatePurchase(BuyList buyList) {
+        buyListMapper.updatePurchaseBuyNumAndFactNum(buyList);
     }
 }

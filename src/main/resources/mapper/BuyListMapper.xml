@@ -12,7 +12,7 @@
 
   </insert>
 
-  <select id="selectPurchasePage" resultType="com.ian.pojo.vo.PurchasePageVO">
+  <select id="selectPurchasePage" resultType="buyList">
     select
         t1.*, t2.store_name as store_name, t3.product_name as product_name
     from

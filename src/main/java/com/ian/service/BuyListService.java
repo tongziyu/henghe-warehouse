@@ -20,4 +20,10 @@ public interface BuyListService {
      * @return
      */
     PurchaseQueryPageVo QueryPurchasePage(PurchasePageDTO purchasePageDTO);
+
+    /**
+     * 修改采购单
+     * @param buyList
+     */
+    void updatePurchase(BuyList buyList);
 }
