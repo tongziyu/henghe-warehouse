@@ -45,4 +45,6 @@ public interface ProductTypeMapper {
 
     @Delete("delete from product_type where type_id = #{typeId}")
     void delete(Integer typeId);
+
+    void update(ProductType productType);
 }

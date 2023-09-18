@@ -108,8 +108,27 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 productTypeMapper.delete(pt.getTypeId());
             }
         }
-
         productTypeMapper.delete(typeId);
+    }
 
+
+    /**
+     * 修改分类
+     * @param productType
+     */
+    @Override
+    @CacheEvict(key = "'all:typeTree'")
+    public void updateType(ProductType productType) {
+        /*
+        思路:
+            - 修改分类的时候,需要需要判断一下 在父类ID相同的情况下, type_name 是不是已经存在
+         */
+        ProductType productType1 = productTypeMapper.selectTypeByNameWithParentId(productType);
+
+        if (productType1 != null){
+            throw new ProductCategoryException("分类名称已存在!!!");
+        }
+
+        productTypeMapper.update(productType);
     }
 }

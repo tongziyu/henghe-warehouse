@@ -64,5 +64,17 @@ public class ProductCategoryController {
         return Result.ok();
     }
 
+    /**
+     * 修改分类
+     * @param productType
+     * @return
+     */
+    @PutMapping("/type-update")
+    public Result updateType(@RequestBody ProductType productType){
+        log.info("修改种类:{}",productType);
+        productTypeService.updateType(productType);
+        return Result.ok("修改成功!!!");
+    }
+
 
 }

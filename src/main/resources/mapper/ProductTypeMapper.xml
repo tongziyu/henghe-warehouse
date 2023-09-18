@@ -16,4 +16,13 @@
         values
           (#{parentId},#{typeCode},#{typeName},#{typeDesc})
     </insert>
+
+    <update id="update" parameterType="ProductType">
+        update product_type
+        set
+            type_name = #{typeName},
+            type_desc = #{typeDesc}
+        where
+            type_id = #{typeId}
+    </update>
 </mapper>

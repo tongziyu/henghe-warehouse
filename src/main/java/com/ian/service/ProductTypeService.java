@@ -26,4 +26,10 @@ public interface ProductTypeService {
      * @param typeId
      */
     void deleteById(Integer typeId);
+
+    /**
+     * 修改分类
+     * @param productType
+     */
+    void updateType(ProductType productType);
 }
