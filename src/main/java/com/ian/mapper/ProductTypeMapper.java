@@ -1,6 +1,7 @@
 package com.ian.mapper;
 
 import com.ian.pojo.entity.ProductType;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -33,4 +34,15 @@ public interface ProductTypeMapper {
 
 
     void insert(ProductType productType);
+
+    /**
+     * 通过父ID查询productType
+     * @param typeId
+     * @return
+     */
+    @Select("select * from product_type where parent_id = #{typeId}")
+    List<ProductType> selectTypeByParentId(Integer typeId);
+
+    @Delete("delete from product_type where type_id = #{typeId}")
+    void delete(Integer typeId);
 }

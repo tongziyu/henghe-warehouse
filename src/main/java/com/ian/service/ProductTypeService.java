@@ -20,4 +20,10 @@ public interface ProductTypeService {
      * @param productType
      */
     void addType(ProductType productType);
+
+    /**
+     * 通过id删除分类,已经删除子分类
+     * @param typeId
+     */
+    void deleteById(Integer typeId);
 }

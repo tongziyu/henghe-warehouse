@@ -90,7 +90,26 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         productTypeMapper.insert(productType);
     }
 
+    /**
+     * 通过id删除分类,以及删除子分类
+     * @param typeId
+     */
+    @Override
+    @CacheEvict(key = "'all:typeTree'")
+    public void deleteById(Integer typeId) {
+        /*
+        思路: 通过id查找有没有子类,  select * from product_type where parentId =#{typeId}
+             如果有子类,则将子类全部删除
+         */
+        List<ProductType> productTypesList = productTypeMapper.selectTypeByParentId(typeId);
 
+        if (productTypesList != null && productTypesList.size() > 0){
+            for (ProductType pt : productTypesList){
+                productTypeMapper.delete(pt.getTypeId());
+            }
+        }
 
+        productTypeMapper.delete(typeId);
 
+    }
 }

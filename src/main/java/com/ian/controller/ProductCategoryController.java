@@ -52,5 +52,17 @@ public class ProductCategoryController {
         return Result.ok();
     }
 
+    /**
+     * 通过id删除分类,以及删除子分类
+     * @param typeId
+     * @return
+     */
+    @DeleteMapping("/type-delete/{typeId}")
+    public Result deleteType(@PathVariable("typeId")Integer typeId){
+
+        productTypeService.deleteById(typeId);
+        return Result.ok();
+    }
+
 
 }
