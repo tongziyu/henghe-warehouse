@@ -3,10 +3,14 @@ package com.ian.controller;
 import com.ian.pojo.Result;
 import com.ian.pojo.dto.PurchasePageDTO;
 import com.ian.pojo.entity.BuyList;
+import com.ian.pojo.entity.InStore;
 import com.ian.pojo.vo.PurchasePageVO;
 import com.ian.pojo.vo.PurchaseQueryPageVo;
 import com.ian.service.BuyListService;
+import com.ian.service.InStoreService;
 import com.ian.service.StoreService;
+import com.ian.utils.CurrentUser;
+import com.ian.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,12 @@ public class PurchaseController {
 
     @Autowired
     private StoreService storeService;
+
+    @Autowired
+    private TokenUtils tokenUtils;
+
+    @Autowired
+    private InStoreService inStoreService;
 
     /**
      * 添加采购单
@@ -90,9 +100,22 @@ public class PurchaseController {
      * 生成入库单
      */
     @PostMapping("/in-warehouse-record-add")
-     public Result inWarehouseRecordAdd(){
+     public Result inWarehouseRecordAdd(@RequestBody BuyList buyList,
+                                        @RequestHeader("token") String token
+                                        ){
+        InStore inStore = new InStore();
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
 
-        return null;
+        inStore.setStoreId(buyList.getStoreId());
+        inStore.setProductId(buyList.getProductId());
+        inStore.setInNum(buyList.getFactBuyNum());
+        inStore.setCreateBy(currentUser.getUserId());
+        inStore.setIsIn("0");
+
+        inStoreService.addInWarehouse(inStore,buyList);
+
+        log.info("生成入库单信息:{}",buyList);
+        return Result.ok("入库完成!!!");
     }
 
 }

@@ -9,4 +9,10 @@ import java.util.List;
 @Mapper
 public interface InStoreMapper {
     List<InStore> selectInStorePage(InStorePageDTO inStorePageDTO);
+
+    /**
+     * 新增入库单
+     * @param inStore
+     */
+    void insert(InStore inStore);
 }

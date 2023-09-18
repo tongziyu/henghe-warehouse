@@ -1,6 +1,7 @@
 package com.ian.service;
 
 import com.ian.pojo.dto.InStorePageDTO;
+import com.ian.pojo.entity.BuyList;
 import com.ian.pojo.entity.InStore;
 import com.ian.pojo.vo.InStorePageVo;
 
@@ -14,4 +15,10 @@ public interface InStoreService {
      * @return
      */
     InStorePageVo QueryInStorePage(InStorePageDTO inStorePageDTO);
+
+    /**
+     * 生成入库单
+     * @param inStore
+     */
+    void addInWarehouse(InStore inStore, BuyList buyList);
 }

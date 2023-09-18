@@ -26,4 +26,10 @@
 
 
   </select>
+
+  <insert id="insert">
+      insert into in_store(store_id, product_id, in_num, create_by, create_time, is_in)
+      values
+          (#{storeId},#{productId},#{inNum},#{createBy},now(),#{isIn})
+    </insert>
 </mapper>

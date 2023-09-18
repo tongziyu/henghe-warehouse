@@ -37,4 +37,11 @@ public interface BuyListMapper {
      */
     @Delete("delete from buy_list where buy_id = #{buyId}")
     void deleteByBuyId(Integer buyId);
+
+    /**
+     * 修改入库状态
+     * @param buyList
+     */
+    @Update("update buy_list set is_in = #{isIn} where buy_id = #{buyId} ")
+    void updateIsIn(BuyList buyList);
 }

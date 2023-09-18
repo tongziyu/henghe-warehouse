@@ -2,6 +2,8 @@ package com.ian.pojo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,8 @@ public class BuyList implements Serializable {
 
     private Integer factBuyNum;
 
-    private Date buyTime;
+
+    private String buyTime;
 
     private Integer supplyId;
 
