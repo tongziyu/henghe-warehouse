@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ian.mapper.InStoreMapper">
+
+
+  <select id="selectInStorePage" resultType="InStore">
+    select
+        t1.*, t2.store_name as store_name, t3.product_name as product_name, t4.user_code as userCode, t3.in_price
+    from
+        in_store t1, store t2, product t3, user_info t4
+    <where>
+        t1.store_id = t2.store_id
+        and t1.product_id = t3.product_id
+        and t4.user_id = t1.create_by
+        <if test="productName != null and productName != ''">
+          and t3.product_name like concat('%',#{productName},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and t1.create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and t1.create_time &lt;= #{endTime}
+        </if>
+
+    </where>
+
+
+  </select>
+</mapper>
