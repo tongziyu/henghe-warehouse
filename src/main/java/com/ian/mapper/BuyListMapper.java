@@ -3,6 +3,7 @@ package com.ian.mapper;
 import com.ian.pojo.dto.PurchasePageDTO;
 import com.ian.pojo.entity.BuyList;
 import com.ian.pojo.vo.PurchasePageVO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
@@ -29,4 +30,11 @@ public interface BuyListMapper {
      */
     @Update("update buy_list set buy_num = #{buyNum}, fact_buy_num = #{factBuyNum} where buy_id = #{buyId}")
     void updatePurchaseBuyNumAndFactNum(BuyList buyList);
+
+    /**
+     * 通过id删除采购单
+     * @param buyId
+     */
+    @Delete("delete from buy_list where buy_id = #{buyId}")
+    void deleteByBuyId(Integer buyId);
 }

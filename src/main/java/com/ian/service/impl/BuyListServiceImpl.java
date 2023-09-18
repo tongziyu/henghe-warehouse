@@ -35,7 +35,7 @@ public class BuyListServiceImpl implements BuyListService {
     public void addPurchase(BuyList buyList) {
         buyList.setIsIn("0");
 
-        buyList.setFactBuyNum(buyList.getBuyNum());
+        buyList.setFactBuyNum(0);
 
         buyListMapper.addPurchase(buyList);
     }
@@ -68,5 +68,16 @@ public class BuyListServiceImpl implements BuyListService {
     @Override
     public void updatePurchase(BuyList buyList) {
         buyListMapper.updatePurchaseBuyNumAndFactNum(buyList);
+    }
+
+    /**
+     * 通过buyId删除采购单
+     * @param buyId
+     */
+    @Override
+    public void deleteByBuyId(Integer buyId) {
+
+        buyListMapper.deleteByBuyId(buyId);
+
     }
 }

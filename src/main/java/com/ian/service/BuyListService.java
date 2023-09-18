@@ -26,4 +26,10 @@ public interface BuyListService {
      * @param buyList
      */
     void updatePurchase(BuyList buyList);
+
+    /**
+     * 通过buyId删除采购单
+     * @param buyId
+     */
+    void deleteByBuyId(Integer buyId);
 }

@@ -72,7 +72,18 @@ public class PurchaseController {
     public Result updatePurchase(@RequestBody BuyList buyList){
         log.info("修改采购单:{}",buyList);
         buyListService.updatePurchase(buyList);
-        return Result.ok();
+        return Result.ok("修改成功!!!");
+    }
+
+    /**
+     * 删除采购单
+     * @param buyId
+     * @return
+     */
+    @DeleteMapping("/purchase-delete/{buyId}")
+    public Result deletePurchase(@PathVariable("buyId") Integer buyId){
+        buyListService.deleteByBuyId(buyId);
+        return Result.ok("删除成功!!!");
     }
 
     /**
