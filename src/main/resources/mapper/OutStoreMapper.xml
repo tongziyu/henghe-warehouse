@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ian.mapper.OutStoreMapper">
+  <resultMap id="BaseResultMap" type="com.ian.pojo.entity.OutStore">
+    <!--@mbg.generated-->
+    <!--@Table out_store-->
+    <id column="outs_id" jdbcType="INTEGER" property="outsId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="tally_id" jdbcType="INTEGER" property="tallyId" />
+    <result column="out_price" jdbcType="DECIMAL" property="outPrice" />
+    <result column="out_num" jdbcType="INTEGER" property="outNum" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_out" jdbcType="CHAR" property="isOut" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    outs_id, product_id, store_id, tally_id, out_price, out_num, create_by, create_time, 
+    is_out
+  </sql>
+
+  <insert id="insertOutStore">
+    insert into out_store(product_id, store_id, tally_id, out_price, out_num, create_by, create_time, is_out)
+    values (#{productId},#{storeId},#{tallyId},#{outPrice},#{outNum},#{createBy},now(),#{isOut})
+    </insert>
+</mapper>
