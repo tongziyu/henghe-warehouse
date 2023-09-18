@@ -11,4 +11,35 @@
         #{placeId},#{buyUser},#{phone},#{isIn})
 
   </insert>
+
+  <select id="selectPurchasePage" resultType="com.ian.pojo.vo.PurchasePageVO">
+    select
+        t1.*, t2.store_name as store_name, t3.product_name as product_name
+    from
+        buy_list t1,store t2, product t3
+    <where>
+        t1.store_id = t2.store_id
+        and t3.product_id = t1.product_id
+        <if test="storeId != null and storeId != ''">
+            and t1.store_id = #{storeId}
+        </if>
+        <if test="productName != null and productName != ''">
+            and product_name like concat('%',#{productName},'%')
+        </if>
+        <if test="buyUser != null and buyUser != ''">
+            and buy_user = #{buyUser}
+        </if>
+        <if test="isIn != null">
+            and is_in = #{isIn}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and buy_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and buy_time &lt;= #{endTime}
+        </if>
+    </where>
+
+
+  </select>
 </mapper>
