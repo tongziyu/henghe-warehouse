@@ -1,12 +1,12 @@
 package com.ian.controller;
 
 import com.ian.pojo.Result;
+import com.ian.pojo.entity.ProductType;
 import com.ian.service.ProductTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description:
@@ -28,4 +28,29 @@ public class ProductCategoryController {
     public Result getProductCategoryTree(){
         return Result.ok(productTypeService.allProductTypeTree());
     }
+
+    /**
+     * 验证新增商品种类的id是否已存在
+     * @param typeCode
+     * @return
+     */
+    @GetMapping("/verify-type-code")
+    public Result verifyTypeCode(String typeCode){
+        ProductType productType = productTypeService.verifyTypeCode(typeCode);
+        return Result.ok(productType == null);
+    }
+
+
+    /**
+     * 添加分类
+     * @return
+     */
+    @PostMapping("/type-add")
+    public Result addType(@RequestBody ProductType productType){
+        log.info("添加分类:{}",productType);
+        productTypeService.addType(productType);
+        return Result.ok();
+    }
+
+
 }

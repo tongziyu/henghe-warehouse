@@ -11,5 +11,9 @@
       select * from product_type
     </select>
 
-
+    <insert id="insert">
+        insert into product_type(parent_id, type_code, type_name, type_desc)
+        values
+          (#{parentId},#{typeCode},#{typeName},#{typeDesc})
+    </insert>
 </mapper>

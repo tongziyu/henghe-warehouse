@@ -1,10 +1,13 @@
 package com.ian.service.impl;
 
+import com.ian.exception.ProductCategoryException;
 import com.ian.mapper.ProductTypeMapper;
+import com.ian.pojo.Result;
 import com.ian.pojo.entity.ProductType;
 import com.ian.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -55,4 +58,39 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
         return typeList;
     }
+    /**
+     * 验证新增商品种类的id是否已存在
+     * @param typeCode
+     */
+    @Override
+    public ProductType verifyTypeCode(String typeCode) {
+        ProductType productType = productTypeMapper.selectTypeWithTypeCode(typeCode);
+
+        return productType;
+    }
+
+    /**
+     * 添加分类
+     * 删除缓存
+     * @param productType
+     */
+    @Override
+    @CacheEvict(key = "'all:typeTree'")
+    public void addType(ProductType productType) {
+        /*
+        思路:
+            - 插入分类的时候,需要需要判断一下 在父类ID相同的情况下,type_name是不是已经存在
+         */
+        ProductType productType1 = productTypeMapper.selectTypeByNameWithParentId(productType);
+
+        if (productType1 != null){
+            throw new ProductCategoryException("分类名称已存在!!!");
+        }
+        // 插入分类
+        productTypeMapper.insert(productType);
+    }
+
+
+
+
 }
