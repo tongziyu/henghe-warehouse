@@ -48,3 +48,12 @@ logging:
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %magenta(%-5level) %green([%-50.50class]) >>> %cyan(%msg) %n'
 
+# 接口文档配置
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  show-actuator: true
+
+
