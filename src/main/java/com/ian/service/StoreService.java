@@ -22,4 +22,17 @@ public interface StoreService {
      * @return
      */
     StorePageVO selectStorePage(StorePageDTO storePageDTO);
+
+    /**
+     * 根据num查询仓库
+     * @param storeNum
+     * @return
+     */
+    Store checkStoreNum(String storeNum);
+
+    /**
+     * 新增仓库
+     * @param store
+     */
+    void addStore(Store store);
 }

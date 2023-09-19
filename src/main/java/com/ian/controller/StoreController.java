@@ -7,9 +7,7 @@ import com.ian.pojo.vo.StorePageVO;
 import com.ian.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +36,25 @@ public class StoreController {
 
         return Result.ok(storePageVO);
     }
+
+    /**
+     * 查询storeNum存不存在
+     * @return
+     */
+    @GetMapping("/store-num-check")
+    public Result storeNumCheck(String storeNum){
+        Store store = storeService.checkStoreNum(storeNum);
+        return Result.ok(store == null);
+    }
+
+    @PostMapping("/store-add")
+    public Result addStore(@RequestBody Store store){
+        log.info("新增仓库:{}",store);
+
+        storeService.addStore(store);
+        return Result.ok();
+    }
+
+
 
 }

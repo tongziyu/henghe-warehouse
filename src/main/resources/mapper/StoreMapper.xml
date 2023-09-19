@@ -28,4 +28,10 @@
 
 
   </select>
+
+  <insert id="insert" parameterType="store">
+       insert into store(store_name, store_num, store_address, concat, phone)
+       values (#{storeName},#{storeNum},#{storeAddress},#{concat},#{phone})
+
+    </insert>
 </mapper>

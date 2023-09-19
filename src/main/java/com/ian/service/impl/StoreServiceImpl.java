@@ -58,4 +58,32 @@ public class StoreServiceImpl implements StoreService {
 
         return storePageVO;
     }
+
+    /**
+     * 根据num查询仓库
+     * @param storeNum
+     * @return
+     */
+    @Override
+    public Store checkStoreNum(String storeNum) {
+        Store store = storeMapper.selectStoreByStoreNum(storeNum);
+        return store;
+    }
+
+    /**
+     * 新增仓库
+     * @param store
+     */
+    @Override
+    public void addStore(Store store) {
+        // 新增仓库前,首先先判断一下 新增仓库的仓库名是否存在,如果存在则抛出异常
+        Store store1 = storeMapper.selectStoreByStoreName(store.getStoreName());
+
+        if (store1 != null ){
+            throw new RuntimeException("仓库名已存在!!");
+        }
+        // 新建仓库
+        storeMapper.insert(store);
+
+    }
 }
