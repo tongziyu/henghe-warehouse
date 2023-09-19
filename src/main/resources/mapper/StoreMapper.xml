@@ -8,4 +8,24 @@
     from
       store
   </select>
+
+  <select id="selectStorePage" resultType="com.ian.pojo.entity.Store">
+        select * from store
+        <where>
+            <if test="storeName != null and storeName != ''">
+                and store_name like concat('%',#{storeName},'%')
+            </if>
+            <if test="storeAddress != null and storeAddress != ''">
+                and store_address like concat('%',#{storeAddress},'%')
+            </if>
+            <if test="concat != null and concat != ''">
+                and concat like concat('%',#{concat},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%',#{phone},'%')
+            </if>
+        </where>
+
+
+  </select>
 </mapper>
