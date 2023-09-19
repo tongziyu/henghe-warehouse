@@ -78,5 +78,13 @@ public class StoreController {
         return Result.ok("删除成功!!");
     }
 
+    /**
+     * 导出数据
+     */
+    @GetMapping("/exportTable")
+    public Result exportTable(StorePageDTO storePageDTO){
+        StorePageVO storePageVO = storeService.selectStorePage(storePageDTO);
 
+        return Result.ok(storePageVO);
+    }
 }

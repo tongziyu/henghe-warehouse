@@ -114,6 +114,7 @@ public class StoreServiceImpl implements StoreService {
      * @param storeId
      */
     @Override
+    @CacheEvict(key = "'storeList'")
     public void deleteStore(Integer storeId) {
         storeMapper.deleteStoreByStoreId(storeId);
     }
