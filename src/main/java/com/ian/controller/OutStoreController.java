@@ -1,13 +1,18 @@
 package com.ian.controller;
 
 import com.ian.pojo.Result;
+import com.ian.pojo.dto.OutStorePageDTO;
 import com.ian.pojo.entity.OutStore;
+import com.ian.pojo.vo.OutStorePageVO;
 import com.ian.service.OutStoreService;
+import com.ian.service.StoreService;
 import com.ian.utils.CurrentUser;
 import com.ian.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -23,6 +28,9 @@ public class OutStoreController {
 
     @Autowired
     private TokenUtils tokenUtils;
+
+    @Autowired
+    private StoreService storeService;
 
     /**
      * 添加出库单
@@ -44,4 +52,25 @@ public class OutStoreController {
         return Result.ok("出库成功");
     }
 
+    /**
+     * 查询所有的仓库
+     * @return
+     */
+    @GetMapping("/store-list")
+    public Result storeList(){
+        return Result.ok(storeService.selectStoreList());
+    }
+
+    /**
+     * 分页查询出库列表 带条件
+     * /outstore-page-list?   storeId=1     &productName=     &startTime=     &endTime=
+     *  &isOut=      &pageSize=5     &pageNum=1     &totalNum=0
+     * @return
+     */
+    @GetMapping("/outstore-page-list")
+    public Result outStorePageList(OutStorePageDTO outStorePageDTO){
+        log.info("分页查询出库列表:{}",outStorePageDTO);
+        OutStorePageVO outStorePageVO = outStoreService.selectOutStorePage(outStorePageDTO);
+        return Result.ok(outStorePageVO);
+    }
 }
