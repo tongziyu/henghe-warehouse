@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ian.mapper.BuyListMapper;
 import com.ian.mapper.InStoreMapper;
+import com.ian.mapper.ProductMapper;
 import com.ian.pojo.Result;
 import com.ian.pojo.dto.InStorePageDTO;
 import com.ian.pojo.entity.BuyList;
 import com.ian.pojo.entity.InStore;
+import com.ian.pojo.entity.Product;
 import com.ian.pojo.vo.InStorePageVo;
 import com.ian.service.InStoreService;
 import com.sun.org.apache.regexp.internal.RE;
@@ -33,6 +35,9 @@ public class InStoreServiceImpl implements InStoreService {
 
     @Autowired
     private BuyListMapper buyListMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     /**
      * 入库分页查询
@@ -70,8 +75,20 @@ public class InStoreServiceImpl implements InStoreService {
      * 确认入库
      * @param inStore
      */
+    @Transactional
     @Override
     public void updateConfirm(InStore inStore) {
+        /*
+        入库逻辑:
+            修改商品的库存数量 = 当前商品数量 + 入库的数量
+         */
+        Product product = productMapper.selectProductByProductId(inStore.getProductId());
+
+        // 设置入库数量
+        product.setProductInvent(product.getProductInvent() + inStore.getInNum());
+        // 修改库存数量
+        productMapper.updateProductInventByProductId(product);
+
         inStore.setIsIn("1");
 
         inStoreMapper.updateConfirm(inStore);
