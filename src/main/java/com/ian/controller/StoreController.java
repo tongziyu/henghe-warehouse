@@ -68,4 +68,15 @@ public class StoreController {
     }
 
 
+    /**
+     * 删除仓库
+     * @return
+     */
+    @DeleteMapping("/store-delete/{storeId}")
+    public Result deleteStore(@PathVariable Integer storeId){
+        storeService.deleteStore(storeId);
+        return Result.ok("删除成功!!");
+    }
+
+
 }

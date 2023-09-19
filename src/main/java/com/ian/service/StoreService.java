@@ -41,4 +41,10 @@ public interface StoreService {
      * @param store
      */
     void updateStore(Store store);
+
+    /**
+     * 删除仓库
+     * @param storeId
+     */
+    void deleteStore(Integer storeId);
 }

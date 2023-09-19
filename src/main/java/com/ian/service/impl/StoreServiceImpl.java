@@ -30,6 +30,7 @@ public class StoreServiceImpl implements StoreService {
 
     /**
      * 查询所有仓库
+     * 缓存中的key 必须要加 ' '
      * @return
      */
     @Cacheable(key = "'storeList'")
@@ -104,9 +105,16 @@ public class StoreServiceImpl implements StoreService {
         if (store1 != null){
             throw new RuntimeException("仓库名已存在");
         }
-
         // 修改仓库
         storeMapper.updateStore(store);
+    }
 
+    /**
+     * 删除仓库
+     * @param storeId
+     */
+    @Override
+    public void deleteStore(Integer storeId) {
+        storeMapper.deleteStoreByStoreId(storeId);
     }
 }

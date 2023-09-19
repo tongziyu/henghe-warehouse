@@ -2,6 +2,7 @@ package com.ian.mapper;
 
 import com.ian.pojo.dto.StorePageDTO;
 import com.ian.pojo.entity.Store;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -57,4 +58,11 @@ public interface StoreMapper {
      * @param store
      */
     void updateStore(Store store);
+
+    /**
+     * 删除仓库
+     * @param storeId
+     */
+    @Delete("delete from store where store_id = #{storeId}")
+    void deleteStoreByStoreId(Integer storeId);
 }
