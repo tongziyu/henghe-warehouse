@@ -35,4 +35,10 @@ public interface StoreService {
      * @param store
      */
     void addStore(Store store);
+
+    /**
+     * 修改仓库信息
+     * @param store
+     */
+    void updateStore(Store store);
 }

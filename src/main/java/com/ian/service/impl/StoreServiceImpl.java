@@ -10,6 +10,7 @@ import com.ian.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class StoreServiceImpl implements StoreService {
      * 查询所有仓库
      * @return
      */
-    @Cacheable(cacheNames = "storeList")
+    @Cacheable(key = "'storeList'")
     @Override
     public List<Store> selectStoreList() {
         List<Store> stores = storeMapper.selectStoreList();
@@ -74,6 +75,7 @@ public class StoreServiceImpl implements StoreService {
      * 新增仓库
      * @param store
      */
+    @CacheEvict(key = "'storeList'")
     @Override
     public void addStore(Store store) {
         // 新增仓库前,首先先判断一下 新增仓库的仓库名是否存在,如果存在则抛出异常
@@ -84,6 +86,27 @@ public class StoreServiceImpl implements StoreService {
         }
         // 新建仓库
         storeMapper.insert(store);
+    }
+
+    /**
+     * 修改仓库信息
+     * @param store
+     */
+    @CacheEvict(key = "'storeList'")
+    @Override
+    public void updateStore(Store store) {
+        /*
+        思路:
+            - 修改仓库前,先判断该仓库名是否已经存在  store_name = #{storeName} and store_id != #{storeId}
+         */
+        Store store1 = storeMapper.selectStoreByStoreNameWithOutStoreId(store);
+
+        if (store1 != null){
+            throw new RuntimeException("仓库名已存在");
+        }
+
+        // 修改仓库
+        storeMapper.updateStore(store);
 
     }
 }

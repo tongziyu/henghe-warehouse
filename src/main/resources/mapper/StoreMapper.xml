@@ -34,4 +34,16 @@
        values (#{storeName},#{storeNum},#{storeAddress},#{concat},#{phone})
 
     </insert>
+
+    <update id="updateStore">
+        update
+            store
+        set
+            store_name = #{storeName},
+            store_address = #{storeAddress},
+            concat = #{concat},
+            phone = #{phone}
+        where
+            store_id = #{storeId}
+    </update>
 </mapper>

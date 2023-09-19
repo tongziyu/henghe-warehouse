@@ -43,4 +43,18 @@ public interface StoreMapper {
      * @param store
      */
     void insert(Store store);
+
+    /**
+     * 通过StoreName查询仓库是否存在 并且 storeId不等于当前的仓库id
+     * @param store
+     * @return
+     */
+    @Select("select * from store where store_name = #{storeName} and store_id != #{storeId}")
+    Store selectStoreByStoreNameWithOutStoreId(Store store);
+
+    /**
+     * 修改仓库信息
+     * @param store
+     */
+    void updateStore(Store store);
 }

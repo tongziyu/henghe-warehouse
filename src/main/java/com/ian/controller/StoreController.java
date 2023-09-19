@@ -55,6 +55,17 @@ public class StoreController {
         return Result.ok();
     }
 
+    /**
+     * 修改仓库信息
+     * @param store
+     * @return
+     */
+    @PutMapping("/store-update")
+    public Result updateStore(@RequestBody Store store){
+        log.info("修改仓库信息:{}",store);
+        storeService.updateStore(store);
+        return Result.ok("修改成功!!");
+    }
 
 
 }
