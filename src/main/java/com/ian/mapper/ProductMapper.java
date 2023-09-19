@@ -55,4 +55,19 @@ public interface ProductMapper {
      * @param product
      */
     void updateProduct(Product product);
+
+    /**
+     * 通过productId查询出来商品
+     * @param productId
+     * @return
+     */
+    @Select("select * from product where product_id = #{productId}")
+    Product selectProductByProductId(Integer productId);
+
+    /**
+     * 通过productId修改商品的库存数量
+     * @param product
+     */
+    @Update("update product set product_invent = #{productInvent} where product_id = #{productId}")
+    void updateProductInventByProductId(Product product);
 }

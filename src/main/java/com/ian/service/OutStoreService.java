@@ -21,4 +21,10 @@ public interface OutStoreService {
      * @return
      */
     OutStorePageVO selectOutStorePage(OutStorePageDTO outStorePageDTO);
+
+    /**
+     * 修改出库状态
+     * @param outStore
+     */
+    void confirmOutStore(OutStore outStore);
 }

@@ -8,6 +8,7 @@ import com.ian.service.OutStoreService;
 import com.ian.service.StoreService;
 import com.ian.utils.CurrentUser;
 import com.ian.utils.TokenUtils;
+import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -72,5 +73,17 @@ public class OutStoreController {
         log.info("分页查询出库列表:{}",outStorePageDTO);
         OutStorePageVO outStorePageVO = outStoreService.selectOutStorePage(outStorePageDTO);
         return Result.ok(outStorePageVO);
+    }
+
+    /**
+     * 确认出库
+     * @param outStore
+     * @return
+     */
+    @PutMapping("/outstore-confirm")
+    public Result outStoreConfirm(@RequestBody OutStore outStore){
+        log.info("确认出库信息:{}",outStore);
+        outStoreService.confirmOutStore(outStore);
+        return Result.ok();
     }
 }
